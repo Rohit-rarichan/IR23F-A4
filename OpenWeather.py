@@ -12,6 +12,29 @@
 import urllib, json
 from urllib import request,error
 
+class OpenWeather:
+
+    def __init__(self, zipcode, ccode) -> None:
+        self.zipcode = zipcode
+        self.ccode = ccode
+        self.apikey = None
+    
+    def set_apikey(self, apikey:str) -> None:
+        ''' Sets the apikey required to make requests to a web API.:param apikey: 
+        The apikey supplied by the API service'''
+        self.apikey = apikey
+
+    def load_data(self) -> None:
+        '''Calls the web api using the required values and stores the response in class data attributes.'''
+        if self.apikey is None:
+            raise ValueError("The API Key has not been set")
+        try:
+            url = f"http://api.openweathermap.org/data/2.5/weather?zip={self.zipcode},{self.ccode}&appid={self.apikey}"
+            self.weather_data = _download_url(url)
+        except:
+            pass
+
+
 def _download_url(url_to_download: str) -> dict:
     response = None
     r_obj = None
