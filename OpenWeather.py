@@ -58,6 +58,34 @@ class OpenWeather:
                 raise ValueError("The API source listed is not currently working")
             else:
                 raise ValueError("HTTP ERROR:", e.code)
+            
+    def transclude(self, message:str) -> str:
+        '''
+  Replaces keywords in a message with associated API data.:param message: The message to transclude
+  :returns: The transcluded message
+  '''      
+        message_list = message.split(' ')
+        keyword = [x for x in message_list if "@" in x]
+        for i in keyword:
+            if i == '@temperature':
+                message = message.replace('@temperature', str(self.temperature))
+            elif i == '@hottest':
+                message = message.replace('@hottest', str(self.high_temperature))
+            elif i == '@coolest':
+                message = message.replace('@coolest', str(self.low_temperature))
+            elif i == '@longitude':
+                message = message.replace('@longitude', str(self.longitude))
+            elif i == '@latitude':
+                message = message.replace('@latitude', str(self.latitude))
+            elif i == '@report':
+                message = message.replace('@report', self.description)
+            elif i == '@humidity':
+                message = message.replace('@humidity', str(self.humidity))
+            elif i == '@sunset':
+                message = message.replace('@sunset', str(self.sunset))
+            elif i == '@sunrise':
+                message = message.replace('@sunrise', str(self.sunrise))
+        return message
 
 def _download_url(url_to_download: str) -> dict:
     response = None
