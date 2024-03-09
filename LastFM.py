@@ -9,7 +9,7 @@
 # rraricha@uci.edu
 # 36126645
 import urllib,json
-from OpenWeather import _download_url
+from OpenWeather import _download_url, online_posting
 
 
 
@@ -67,7 +67,19 @@ class LastFM:
             else:
                 raise ValueError("HTTP ERROR:", e.code)
             
-
+    def transclude(self, message:str) -> str:
+        '''  Replaces keywords in a message with associated API data.:param message: The message to transclude
+  :returns: The transcluded message'''
+        message_list = message.split(' ')
+        keyword = [x for x in message_list if "@" in x]
+        for i in keyword:
+            if i == '@album_info':
+                message = message.replace('@album_info', str(self.album_data))
+            elif i == '@top_tracks':
+                message = message.replace('@top_tracks', str(self.artist_tracks))
+            elif i == '@chart_tops':
+                message = message.replace('@chart_tops', str(self.chart_artists))
+        return message
 
 
 def FM_main() -> None:
@@ -75,9 +87,11 @@ def FM_main() -> None:
     open_music = LastFM(music_apikey)
     open_music.set_apikey(music_apikey)
     open_music.load_data()
+    message = input("Enter your message with the keyword")
+    message = open_music.transclude(message)
+    online_posting(message)
 
 
-if __name__ == '__main__':
-    FM_main()
+
         
 
