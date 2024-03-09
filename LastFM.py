@@ -40,6 +40,20 @@ class LastFM:
                     tracks.append(self.artist_tracks['toptracks']['track'][i]['name'])
                 print(tracks)
                 self.artist_tracks = tracks
+            elif method == "chart.gettopartists":
+                url = f"http://ws.audioscrobbler.com/2.0/?method={method}&api_key={self.apikey}&format=json"
+                self.chart_top = _download_url(url)
+                artists = []
+                for i in range(len(self.chart_top['artists']['artist'])):
+                    artists.append(self.chart_top['artists']['artist'][i]['name'])
+                print(artists)
+                self.chart_artists = artists
+            elif method == "album.getinfo":
+                artist = input("Enter the name of a artist")
+                album = input("Enter the name of a album")
+                url = f"http://ws.audioscrobbler.com/2.0/?method={method}&api_key={self.apikey}&artist={artist}&album={album}&format=json"
+                self.album_data = _download_url(url)
+                print(self.album_data)
         except urllib.error.URLError as e:
             raise ValueError(f"Failed to connect to OpenWeather API")
         except urllib.error.HTTPError as e:
