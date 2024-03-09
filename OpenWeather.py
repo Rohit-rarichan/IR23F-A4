@@ -82,7 +82,6 @@ def main() -> None:
     zip = "92697"
     ccode = "US"
     weather_apikey = "65518d2062b2ced79bbb83249bd10638"
-    url = f"http://api.openweathermap.org/data/2.5/weather?zip={zip},{ccode}&appid={weather_apikey}"
     open_weather = OpenWeather(zip, ccode)
     open_weather.set_apikey(weather_apikey)
     open_weather.load_data()
