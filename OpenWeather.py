@@ -66,6 +66,8 @@ class OpenWeather:
   '''      
         message_list = message.split(' ')
         keyword = [x for x in message_list if "@" in x]
+        if keyword == []:
+            return False
         for i in keyword:
             if i == '@temperature':
                 message = message.replace('@temperature', str(self.temperature))
@@ -85,6 +87,8 @@ class OpenWeather:
                 message = message.replace('@sunset', str(self.sunset))
             elif i == '@sunrise':
                 message = message.replace('@sunrise', str(self.sunrise))
+            elif i == '@weather':
+                message = message.replace('@weather', str(self.description))
         return message
 
 def _download_url(url_to_download: str) -> dict:
@@ -113,7 +117,7 @@ def main() -> None:
     open_weather = OpenWeather(zip, ccode)
     open_weather.set_apikey(weather_apikey)
     open_weather.load_data()
-    print("Keywords that can be used: @temperature, @hottest, @lowest, @longitude, @latitude, @report, @humidity, @sunset, @sunrise")
+    print("Keywords that can be used: @temperature, @hottest, @lowest, @longitude, @latitude, @report, @humidity, @sunset, @sunrise, @weather")
     message = input("Enter your message with the keyword")
     message = open_weather.transclude(message)
 
