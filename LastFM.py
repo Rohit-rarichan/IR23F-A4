@@ -82,6 +82,7 @@ def FM_main() -> None:
     open_music = LastFM(music_apikey)
     open_music.set_apikey(music_apikey)
     open_music.load_data()
+    print("The keywords you can use are: @album_info , @top_tracks , @chart_tops")
     message = input("Enter your message with the keyword")
     message = open_music.transclude(message)
     online_posting(message)
