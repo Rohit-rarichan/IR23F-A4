@@ -17,13 +17,11 @@ class LastFM:
     # API KEY = 0f3b7d4b1bcbf510a016140f60ee960d
     def __init__(self, music_apikey) -> None:
         self.apikey = music_apikey
-        self.artist_tracks = None 
-        self.apikey = music_apikey
         self.album_data = None 
         self.artist_tracks = None 
         self.chart_top = None
         self.chart_artists = None
-        
+
     def set_apikey(self, apikey:str) -> None:
         '''Sets the apikey required to make requests to a web API.
         :param apikey: The apikey supplied by the API service

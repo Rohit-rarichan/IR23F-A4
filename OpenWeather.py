@@ -107,12 +107,15 @@ def _download_url(url_to_download: str) -> dict:
     return r_obj
 
 def main() -> None:
-    zip = "92697"
-    ccode = "US"
+    zip = input("Enter the zip code")
+    ccode = input("Enter the country code")
     weather_apikey = "65518d2062b2ced79bbb83249bd10638"
     open_weather = OpenWeather(zip, ccode)
     open_weather.set_apikey(weather_apikey)
     open_weather.load_data()
+    print("Keywords that can be used: @temperature, @hottest, @lowest, @longitude, @latitude, @report, @humidity, @sunset, @sunrise")
+    message = input("Enter your message with the keyword")
+    message = open_weather.transclude(message)
 
 
 if __name__ == '__main__':
