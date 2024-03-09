@@ -49,9 +49,15 @@ class OpenWeather:
             self.humidity = self.weather_data['main']['humidity']
             self.sunset = self.weather_data['sys']['sunset']
             self.sunrise = self.weather_data['sys']['sunrise']
-        except:
-            pass
-
+        except urllib.error.URLError as e:
+            raise ValueError(f"Failed to connect to OpenWeather API")
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                raise ValueError("Requested remote API is unavailable")
+            elif e.code == 503:
+                raise ValueError("The API source listed is not currently working")
+            else:
+                raise ValueError("HTTP ERROR:", e.code)
 
 def _download_url(url_to_download: str) -> dict:
     response = None
