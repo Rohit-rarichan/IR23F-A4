@@ -11,7 +11,7 @@
 # API KEY - 65518d2062b2ced79bbb83249bd10638
 import urllib, json
 from urllib import request,error
-
+from ds_client import send
 class OpenWeather:
     def __init__(self, zipcode:str, ccode:str) -> None:
         self.zipcode = zipcode
@@ -90,6 +90,14 @@ class OpenWeather:
             elif i == '@weather':
                 message = message.replace('@weather', str(self.description))
         return message
+    
+def online_posting(message:str):
+    username = input("Enter the username : ")
+    password = input("Enter the password : ")
+    bio = input("Enter a few lines of bio data : ")
+    srv_ip = input("Enter the server IP address : ")
+    port = "3021"
+    send(srv_ip, port, username, password, message, bio)
 
 def _download_url(url_to_download: str) -> dict:
     response = None
@@ -110,7 +118,7 @@ def _download_url(url_to_download: str) -> dict:
     
     return r_obj
 
-def main() -> None:
+def weather_main() -> None:
     zip = input("Enter the zip code")
     ccode = input("Enter the country code")
     weather_apikey = "65518d2062b2ced79bbb83249bd10638"
@@ -120,7 +128,8 @@ def main() -> None:
     print("Keywords that can be used: @temperature, @hottest, @lowest, @longitude, @latitude, @report, @humidity, @sunset, @sunrise, @weather")
     message = input("Enter your message with the keyword")
     message = open_weather.transclude(message)
+    online_posting(message)
 
 
 if __name__ == '__main__':
-    main()
+    weather_main()

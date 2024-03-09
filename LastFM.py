@@ -66,6 +66,7 @@ class LastFM:
                 raise ValueError("The API source listed is not currently working")
             else:
                 raise ValueError("HTTP ERROR:", e.code)
+            
 
 
 
@@ -75,5 +76,8 @@ def FM_main() -> None:
     open_music.set_apikey(music_apikey)
     open_music.load_data()
 
+
+if __name__ == '__main__':
+    FM_main()
         
 
